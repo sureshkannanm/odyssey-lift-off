@@ -10,6 +10,10 @@ const resolvers = {
       const res = await fetch(`${baseUrl}/tracks`);
       return res.json();
     },
+    // get a single track by ID, for the track page
+    track: (_, { id }, { dataSources }) => {
+      return dataSources.trackAPI.getTrack(id);
+    },
   },
   Track: {
     author: async ({ authorId }, _, { dataSources }) => {
@@ -17,6 +21,10 @@ const resolvers = {
       //   const res = await fetch(`${baseUrl}/author/${authorId}`);
       //   return res.json();
       return dataSources.trackAPI.getAuthor(authorId);
+    },
+
+    modules: ({id}, _, {dataSources}) => {
+      return dataSources.trackAPI.getTrackModules(id);
     },
   },
 };

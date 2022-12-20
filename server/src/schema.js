@@ -1,10 +1,14 @@
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
     "Get Tracks for home page"
     tracksForHome: [Track!]!
+    "Get Tracks for home page using fetch"
     tracksForHomeFetch: [Track!]!
+
+    "Fetch a specific track, provided a track's ID"
+    track(id: ID!): Track
   }
 
   """
@@ -23,6 +27,22 @@ const typeDefs = gql`
     length: Int
     "tracks module count "
     modulesCount: Int
+    "The track's complete description, can be in Markdown format"
+    description: String
+    "The number of times a track has been viewed"
+    numberOfViews: Int
+
+    "The track's complete array of Modules"
+    modules: [Module!]!
+  }
+
+  "A Module is a single unit of teaching. Multiple Modules compose a Track"
+  type Module {
+    id: ID!
+    "The Module's title"
+    title: String!
+    "The Module's length in minutes"
+    length: Int
   }
 
   """
